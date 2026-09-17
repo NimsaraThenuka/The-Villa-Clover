@@ -46,11 +46,11 @@ export default function VillaVideoPlayer({
         </p>
       </div>
 
-      {/* Video Container Frame - Compact & Clean */}
-      <div className="reveal-scale max-w-3xl mx-auto">
+      {/* Video Container Frame - Native 9:16 Vertical Ratio (Zero Black Bars) */}
+      <div className="reveal-scale max-w-[340px] sm:max-w-[360px] md:max-w-[380px] mx-auto">
         <div
-          className="relative w-full aspect-video rounded-xs overflow-hidden shadow-lg border bg-[#0d1b2a]"
-          style={{ borderColor: 'rgba(201, 169, 110, 0.25)' }}
+          className="relative w-full aspect-[9/16] rounded-xl overflow-hidden shadow-2xl border-2 bg-black"
+          style={{ borderColor: 'rgba(201, 169, 110, 0.35)' }}
         >
           {!isPlaying ? (
             <div
@@ -69,10 +69,10 @@ export default function VillaVideoPlayer({
                 style={{ background: 'rgba(13, 27, 42, 0.35)' }}
               >
                 <button
-                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white bg-black/60 hover:bg-[#c9a96e] hover:text-[#0d1b2a] transition-all duration-300 shadow-xl border border-white/30 hover:border-transparent group-hover:scale-110 cursor-pointer"
+                  className="w-16 h-16 sm:w-18 sm:h-18 rounded-full flex items-center justify-center text-[#0d1b2a] bg-[#c9a96e] hover:bg-amber-300 transition-all duration-300 shadow-2xl group-hover:scale-110 cursor-pointer"
                   aria-label="Play video"
                 >
-                  <Play className="w-6 h-6 fill-current ml-0.5" />
+                  <Play className="w-7 h-7 fill-current ml-0.5 text-[#0d1b2a]" />
                 </button>
               </div>
             </div>

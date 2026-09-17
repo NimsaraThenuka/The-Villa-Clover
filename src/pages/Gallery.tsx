@@ -404,7 +404,7 @@ export default function Gallery({ onNavigate }: GalleryProps) {
               {/* Main Content Container (Video iframe vs Image) */}
               {currentPhoto.isVideo ? (
                 <div
-                  className="relative w-full max-w-4xl aspect-video rounded-xs overflow-hidden shadow-2xl bg-black border border-white/20 my-auto"
+                  className="relative w-[88vw] max-w-[340px] sm:max-w-[380px] aspect-[9/16] max-h-[78vh] rounded-xl overflow-hidden shadow-2xl bg-black border-2 border-[#c9a96e]/40 my-auto"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <iframe
