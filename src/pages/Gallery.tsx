@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 import { X, ChevronLeft, ChevronRight, Sparkles, ZoomIn } from 'lucide-react';
 import { VILLA_IMAGES, GALLERY_PHOTOS, GalleryPhoto } from '../data/villaImages';
+import VillaVideoPlayer from '../components/VillaVideoPlayer';
 
 interface GalleryProps {
   onNavigate: (page: string) => void;
@@ -211,9 +212,21 @@ export default function Gallery({ onNavigate }: GalleryProps) {
         </div>
         <div
           className="absolute bottom-0 left-0 right-0 h-16"
-          style={{ background: 'linear-gradient(to bottom, transparent, #f8f5f0)' }}
+          style={{ background: 'linear-gradient(to bottom, transparent, #0d1b2a)' }}
         />
       </header>
+
+      {/* ── CINEMATIC VILLA VIDEO TOUR ── */}
+      <section className="py-14 sm:py-20 px-4 sm:px-6 lg:px-12" style={{ background: '#0d1b2a' }}>
+        <div className="max-w-7xl mx-auto">
+          <VillaVideoPlayer
+            badge="Cinematic Tour"
+            title="4K Drone & Ground Walkthrough"
+            subtitle="Watch the full cinematic tour of The Villa Clover — featuring aerial views of lush Galle surroundings, peaceful veranda, rooftop sundowner deck, and private luxury bedrooms."
+            darkTheme={true}
+          />
+        </div>
+      </section>
 
       {/* ── FILTER TABS ── */}
       <section

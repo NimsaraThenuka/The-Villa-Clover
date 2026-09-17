@@ -21,6 +21,7 @@ import {
   Compass,
   Sparkles,
 } from 'lucide-react';
+import VillaVideoPlayer from '../components/VillaVideoPlayer';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
@@ -778,6 +779,18 @@ export default function Home({ onNavigate }: HomeProps) {
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* ── CINEMATIC VILLA VIDEO TOUR ── */}
+      <section className="py-24 px-6 lg:px-12" style={{ background: '#ffffff' }}>
+        <div className="max-w-7xl mx-auto">
+          <VillaVideoPlayer
+            badge="Cinematic Experience"
+            title="Experience The Villa in Motion"
+            subtitle="Explore our peaceful tropical garden, panoramic sun terrace, and modern air-conditioned villa suites through authentic drone & ground footage."
+            darkTheme={false}
+          />
         </div>
       </section>
 
