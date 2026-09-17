@@ -48,7 +48,7 @@ export interface GalleryPhoto {
 export const GALLERY_PHOTOS: GalleryPhoto[] = [
   {
     url: '/images/villa/dsc08315-hdr.jpg',
-    videoUrl: 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview',
+    videoUrl: 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview?autoplay=1',
     alt: 'The Villa Clover - Villa Video Tour',
     category: 'Video',
     isVideo: true,

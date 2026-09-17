@@ -408,7 +408,7 @@ export default function Gallery({ onNavigate }: GalleryProps) {
                   onClick={(e) => e.stopPropagation()}
                 >
                   <iframe
-                    src={currentPhoto.videoUrl || 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview'}
+                    src={currentPhoto.videoUrl || 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview?autoplay=1'}
                     title={currentPhoto.alt}
                     className="w-full h-[calc(100%+60px)] -mt-[60px] border-0"
                     allow="autoplay; encrypted-media; fullscreen"

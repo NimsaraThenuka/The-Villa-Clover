@@ -17,7 +17,7 @@ export default function VillaVideoPlayer({
 }: VillaVideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const videoEmbedUrl = 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview';
+  const videoEmbedUrl = 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview?autoplay=1';
 
   return (
     <div className="w-full">
