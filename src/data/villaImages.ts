@@ -39,11 +39,20 @@ export const VILLA_IMAGES = {
 export interface GalleryPhoto {
   url: string;
   alt: string;
-  category: 'Exterior' | 'Interior' | 'Garden' | 'Terrace';
+  category: 'Exterior' | 'Interior' | 'Garden' | 'Terrace' | 'Video';
   wide?: boolean;
+  isVideo?: boolean;
+  videoUrl?: string;
 }
 
 export const GALLERY_PHOTOS: GalleryPhoto[] = [
+  {
+    url: '/images/villa/dsc08315-hdr.jpg',
+    videoUrl: 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview',
+    alt: 'The Villa Clover - Villa Video Tour',
+    category: 'Video',
+    isVideo: true,
+  },
   {
     "url": "/images/villa/dsc08276-hdr.jpg",
     "alt": "Villa Clover Exterior & Entrance",

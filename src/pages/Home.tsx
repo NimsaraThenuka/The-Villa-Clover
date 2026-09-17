@@ -782,13 +782,13 @@ export default function Home({ onNavigate }: HomeProps) {
         </div>
       </section>
 
-      {/* ── CINEMATIC VILLA VIDEO TOUR ── */}
-      <section className="py-24 px-6 lg:px-12" style={{ background: '#ffffff' }}>
-        <div className="max-w-7xl mx-auto">
+      {/* ── VILLA VIDEO TOUR ── */}
+      <section className="py-20 px-6 lg:px-12" style={{ background: '#ffffff' }}>
+        <div className="max-w-5xl mx-auto">
           <VillaVideoPlayer
-            badge="Cinematic Experience"
-            title="Experience The Villa in Motion"
-            subtitle="Explore our peaceful tropical garden, panoramic sun terrace, and modern air-conditioned villa suites through authentic drone & ground footage."
+            badge="Video Tour"
+            title="Villa Video Tour"
+            subtitle="Take a short walkthrough of The Villa Clover — our garden, terrace, and living spaces."
             darkTheme={false}
           />
         </div>

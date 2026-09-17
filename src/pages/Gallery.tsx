@@ -1,15 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
-import { X, ChevronLeft, ChevronRight, Sparkles, ZoomIn } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Sparkles, ZoomIn, Play } from 'lucide-react';
 import { VILLA_IMAGES, GALLERY_PHOTOS, GalleryPhoto } from '../data/villaImages';
-import VillaVideoPlayer from '../components/VillaVideoPlayer';
 
 interface GalleryProps {
   onNavigate: (page: string) => void;
 }
 
-const categories = ['All', 'Exterior', 'Interior', 'Garden', 'Terrace'];
+const categories = ['All', 'Videos', 'Exterior', 'Interior', 'Garden', 'Terrace'];
 
 function GalleryImageCard({
   photo,
@@ -40,7 +39,7 @@ function GalleryImageCard({
         </div>
       )}
 
-      {/* Actual Image */}
+      {/* Actual Image / Poster */}
       <img
         src={photo.url}
         alt={photo.alt}
@@ -51,6 +50,15 @@ function GalleryImageCard({
         }`}
       />
 
+      {/* Video Indicator Badge for Video Items */}
+      {photo.isVideo && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+          <div className="w-12 h-12 rounded-full bg-black/65 text-white border border-white/30 flex items-center justify-center shadow-lg group-hover:bg-[#c9a96e] group-hover:text-[#0d1b2a] group-hover:border-transparent transition-all duration-300 group-hover:scale-110">
+            <Play className="w-5 h-5 fill-current ml-0.5" />
+          </div>
+        </div>
+      )}
+
       {/* Hover Overlay */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-between p-4 pointer-events-none z-10"
@@ -59,7 +67,7 @@ function GalleryImageCard({
         }}
       >
         <div className="self-end p-2 bg-black/40 rounded-full text-white/90 backdrop-blur-sm shadow-sm">
-          <ZoomIn className="w-4 h-4" />
+          {photo.isVideo ? <Play className="w-4 h-4 fill-current" /> : <ZoomIn className="w-4 h-4" />}
         </div>
         <div>
           <span
@@ -88,10 +96,16 @@ export default function Gallery({ onNavigate }: GalleryProps) {
   }, []);
 
   const filtered: GalleryPhoto[] =
-    active === 'All' ? GALLERY_PHOTOS : GALLERY_PHOTOS.filter((p) => p.category === active);
+    active === 'All'
+      ? GALLERY_PHOTOS
+      : active === 'Videos' || active === 'Video'
+      ? GALLERY_PHOTOS.filter((p) => p.category === 'Video' || p.isVideo)
+      : GALLERY_PHOTOS.filter((p) => p.category === active);
 
   const getCategoryCount = (cat: string) => {
     if (cat === 'All') return GALLERY_PHOTOS.length;
+    if (cat === 'Videos' || cat === 'Video')
+      return GALLERY_PHOTOS.filter((p) => p.category === 'Video' || p.isVideo).length;
     return GALLERY_PHOTOS.filter((p) => p.category === cat).length;
   };
 
@@ -212,21 +226,9 @@ export default function Gallery({ onNavigate }: GalleryProps) {
         </div>
         <div
           className="absolute bottom-0 left-0 right-0 h-16"
-          style={{ background: 'linear-gradient(to bottom, transparent, #0d1b2a)' }}
+          style={{ background: 'linear-gradient(to bottom, transparent, #f8f5f0)' }}
         />
       </header>
-
-      {/* ── CINEMATIC VILLA VIDEO TOUR ── */}
-      <section className="py-14 sm:py-20 px-4 sm:px-6 lg:px-12" style={{ background: '#0d1b2a' }}>
-        <div className="max-w-7xl mx-auto">
-          <VillaVideoPlayer
-            badge="Cinematic Tour"
-            title="4K Drone & Ground Walkthrough"
-            subtitle="Watch the full cinematic tour of The Villa Clover — featuring aerial views of lush Galle surroundings, peaceful veranda, rooftop sundowner deck, and private luxury bedrooms."
-            darkTheme={true}
-          />
-        </div>
-      </section>
 
       {/* ── FILTER TABS ── */}
       <section
@@ -285,7 +287,7 @@ export default function Gallery({ onNavigate }: GalleryProps) {
 
           {filtered.length === 0 && (
             <div className="text-center py-20 text-gray-400" style={{ fontFamily: 'Inter, sans-serif' }}>
-              No photos in this category.
+              No photos or videos in this category.
             </div>
           )}
         </div>
@@ -353,8 +355,8 @@ export default function Gallery({ onNavigate }: GalleryProps) {
                   <button
                     className="p-2 sm:p-2.5 rounded-full hover:bg-white/20 text-white transition-all cursor-pointer hover:scale-105 active:scale-95"
                     onClick={handlePrev}
-                    aria-label="Previous photo"
-                    title="Previous photo"
+                    aria-label="Previous item"
+                    title="Previous item"
                   >
                     <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
@@ -362,8 +364,8 @@ export default function Gallery({ onNavigate }: GalleryProps) {
                   <button
                     className="p-2 sm:p-2.5 rounded-full hover:bg-white/20 text-white transition-all cursor-pointer hover:scale-105 active:scale-95"
                     onClick={handleNext}
-                    aria-label="Next photo"
-                    title="Next photo"
+                    aria-label="Next item"
+                    title="Next item"
                   >
                     <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
                   </button>
@@ -380,7 +382,7 @@ export default function Gallery({ onNavigate }: GalleryProps) {
               </div>
             </div>
 
-            {/* Center Area: Image & Nav Buttons */}
+            {/* Center Area: Image or Video & Nav Buttons */}
             <div
               className="relative flex-1 w-full max-w-6xl flex items-center justify-center my-auto min-h-0"
               onTouchStart={onTouchStart}
@@ -399,24 +401,39 @@ export default function Gallery({ onNavigate }: GalleryProps) {
                 <ChevronLeft className="w-6 h-6" />
               </button>
 
-              {/* Main Image Container */}
-              <div
-                className="relative flex flex-col items-center justify-center max-h-full max-w-[95vw] md:max-w-[82vw]"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <img
-                  src={currentPhoto.url}
-                  alt={currentPhoto.alt}
-                  onLoad={() => setIsImgLoading(false)}
-                  className={`max-w-full max-h-[64vh] sm:max-h-[72vh] object-contain rounded-xs shadow-2xl transition-opacity duration-300 select-none ${
-                    isImgLoading ? 'opacity-40 scale-[0.99]' : 'opacity-100 scale-100'
-                  }`}
-                  style={{ display: 'block' }}
-                />
-                <p className="mt-3 text-white/90 text-xs md:text-sm text-center font-light tracking-wide px-4">
-                  {currentPhoto.alt}
-                </p>
-              </div>
+              {/* Main Content Container (Video iframe vs Image) */}
+              {currentPhoto.isVideo ? (
+                <div
+                  className="relative w-full max-w-4xl aspect-video rounded-xs overflow-hidden shadow-2xl bg-black border border-white/20"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <iframe
+                    src={currentPhoto.videoUrl || 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview'}
+                    title={currentPhoto.alt}
+                    className="w-full h-full border-0"
+                    allow="autoplay; encrypted-media; fullscreen"
+                    allowFullScreen
+                  />
+                </div>
+              ) : (
+                <div
+                  className="relative flex flex-col items-center justify-center max-h-full max-w-[95vw] md:max-w-[82vw]"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <img
+                    src={currentPhoto.url}
+                    alt={currentPhoto.alt}
+                    onLoad={() => setIsImgLoading(false)}
+                    className={`max-w-full max-h-[64vh] sm:max-h-[72vh] object-contain rounded-xs shadow-2xl transition-opacity duration-300 select-none ${
+                      isImgLoading ? 'opacity-40 scale-[0.99]' : 'opacity-100 scale-100'
+                    }`}
+                    style={{ display: 'block' }}
+                  />
+                  <p className="mt-3 text-white/90 text-xs md:text-sm text-center font-light tracking-wide px-4">
+                    {currentPhoto.alt}
+                  </p>
+                </div>
+              )}
 
               {/* Desktop Side Arrow Right */}
               <button
@@ -444,10 +461,16 @@ export default function Gallery({ onNavigate }: GalleryProps) {
                   <button
                     key={p.url + realIndex}
                     onClick={() => handleOpenLightbox(realIndex)}
-                    className={`shrink-0 w-12 h-9 rounded overflow-hidden cursor-pointer transition-all duration-200 border-2 ${isCur ? 'border-amber-400 scale-110 opacity-100 shadow-lg' : 'border-transparent opacity-40 hover:opacity-80'
-                      }`}
+                    className={`shrink-0 w-12 h-9 rounded overflow-hidden cursor-pointer transition-all duration-200 border-2 relative ${
+                      isCur ? 'border-amber-400 scale-110 opacity-100 shadow-lg' : 'border-transparent opacity-40 hover:opacity-80'
+                    }`}
                   >
                     <img src={p.url} alt="" className="w-full h-full object-cover" />
+                    {p.isVideo && (
+                      <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+                        <Play className="w-3 h-3 text-amber-300 fill-current" />
+                      </div>
+                    )}
                   </button>
                 );
               })}
