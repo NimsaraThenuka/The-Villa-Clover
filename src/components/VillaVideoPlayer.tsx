@@ -77,13 +77,23 @@ export default function VillaVideoPlayer({
               </div>
             </div>
           ) : (
-            <iframe
-              src={videoEmbedUrl}
-              title="The Villa Clover - Video Tour"
-              className="w-full h-full border-0"
-              allow="autoplay; encrypted-media; fullscreen"
-              allowFullScreen
-            />
+            <div className="relative w-full h-full overflow-hidden bg-black">
+              <iframe
+                src={videoEmbedUrl}
+                title="The Villa Clover - Video Tour"
+                className="w-full h-[calc(100%+60px)] -mt-[60px] border-0"
+                allow="autoplay; encrypted-media; fullscreen"
+                allowFullScreen
+              />
+              {/* Block any top-right pop-out click */}
+              <div
+                className="absolute top-0 right-0 w-32 h-16 z-20 pointer-events-auto"
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                }}
+              />
+            </div>
           )}
         </div>
       </div>

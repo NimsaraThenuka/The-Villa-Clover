@@ -404,15 +404,23 @@ export default function Gallery({ onNavigate }: GalleryProps) {
               {/* Main Content Container (Video iframe vs Image) */}
               {currentPhoto.isVideo ? (
                 <div
-                  className="relative w-full max-w-4xl aspect-video rounded-xs overflow-hidden shadow-2xl bg-black border border-white/20"
+                  className="relative w-full max-w-4xl aspect-video rounded-xs overflow-hidden shadow-2xl bg-black border border-white/20 my-auto"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <iframe
                     src={currentPhoto.videoUrl || 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview'}
                     title={currentPhoto.alt}
-                    className="w-full h-full border-0"
+                    className="w-full h-[calc(100%+60px)] -mt-[60px] border-0"
                     allow="autoplay; encrypted-media; fullscreen"
                     allowFullScreen
+                  />
+                  {/* Block any top-right pop-out click */}
+                  <div
+                    className="absolute top-0 right-0 w-32 h-16 z-20 pointer-events-auto"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
                   />
                 </div>
               ) : (
