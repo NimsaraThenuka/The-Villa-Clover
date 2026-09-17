@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Play, ExternalLink } from 'lucide-react';
+import { Play } from 'lucide-react';
 import { VILLA_IMAGES } from '../data/villaImages';
 
 interface VillaVideoPlayerProps {
@@ -18,7 +18,6 @@ export default function VillaVideoPlayer({
   const [isPlaying, setIsPlaying] = useState(false);
 
   const videoEmbedUrl = 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview';
-  const videoDirectUrl = 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/view?usp=drive_link';
 
   return (
     <div className="w-full">
@@ -86,20 +85,6 @@ export default function VillaVideoPlayer({
               allowFullScreen
             />
           )}
-        </div>
-
-        {/* Small Drive link */}
-        <div className="mt-3 text-center">
-          <a
-            href={videoDirectUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 text-xs text-[#c9a96e] hover:underline"
-            style={{ fontFamily: 'Inter, sans-serif' }}
-          >
-            <span>Open in Google Drive</span>
-            <ExternalLink className="w-3 h-3" />
-          </a>
         </div>
       </div>
     </div>
