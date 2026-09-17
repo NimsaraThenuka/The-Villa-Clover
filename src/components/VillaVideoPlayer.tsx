@@ -91,9 +91,11 @@ export default function VillaVideoPlayer({
               ref={videoRef}
               src={videoSrc}
               controls
+              controlsList="nodownload"
+              onContextMenu={(e) => e.preventDefault()}
               autoPlay
               playsInline
-              className="w-full h-full object-cover bg-black"
+              className="w-full h-full object-cover bg-black select-none"
               preload="auto"
             />
           )}

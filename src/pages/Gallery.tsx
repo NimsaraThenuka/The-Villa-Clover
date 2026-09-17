@@ -410,9 +410,11 @@ export default function Gallery({ onNavigate }: GalleryProps) {
                   <video
                     src={currentPhoto.videoUrl || '/video/villa-tour.mp4'}
                     controls
+                    controlsList="nodownload"
+                    onContextMenu={(e) => e.preventDefault()}
                     autoPlay
                     playsInline
-                    className="w-full h-full object-cover bg-black"
+                    className="w-full h-full object-cover bg-black select-none"
                   />
                 </div>
               ) : (
