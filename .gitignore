@@ -21,4 +21,4 @@ logs/
 /.opencode-skills/
 src/assets/villa_images/
 *.part
-*.mp4
+!public/video/*.mp4

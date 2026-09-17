@@ -401,26 +401,18 @@ export default function Gallery({ onNavigate }: GalleryProps) {
                 <ChevronLeft className="w-6 h-6" />
               </button>
 
-              {/* Main Content Container (Video iframe vs Image) */}
+              {/* Main Content Container (Video vs Image) */}
               {currentPhoto.isVideo ? (
                 <div
-                  className="relative w-[88vw] max-w-[340px] sm:max-w-[380px] aspect-[9/16] max-h-[78vh] rounded-xl overflow-hidden shadow-2xl bg-black border-2 border-[#c9a96e]/40 my-auto"
+                  className="relative w-[88vw] max-w-[320px] sm:max-w-[360px] aspect-[9/16] max-h-[78vh] rounded-xl overflow-hidden shadow-2xl bg-black border-2 border-[#c9a96e]/40 my-auto flex items-center justify-center"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <iframe
-                    src={currentPhoto.videoUrl || 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview?autoplay=1'}
-                    title={currentPhoto.alt}
-                    className="w-full h-[calc(100%+60px)] -mt-[60px] border-0"
-                    allow="autoplay; encrypted-media; fullscreen"
-                    allowFullScreen
-                  />
-                  {/* Block any top-right pop-out click */}
-                  <div
-                    className="absolute top-0 right-0 w-32 h-16 z-20 pointer-events-auto"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      e.stopPropagation();
-                    }}
+                  <video
+                    src={currentPhoto.videoUrl || '/video/villa-tour.mp4'}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="w-full h-full object-cover bg-black"
                   />
                 </div>
               ) : (

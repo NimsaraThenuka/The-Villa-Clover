@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Play } from 'lucide-react';
 import { VILLA_IMAGES } from '../data/villaImages';
 
@@ -16,8 +16,18 @@ export default function VillaVideoPlayer({
   darkTheme = false,
 }: VillaVideoPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  const videoEmbedUrl = 'https://drive.google.com/file/d/1n4O6iAmk777J9Q9Pwe1NkH3WGpKOeijt/preview?autoplay=1';
+  const videoSrc = '/video/villa-tour.mp4';
+
+  const handleStartPlay = () => {
+    setIsPlaying(true);
+    setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.play().catch(() => {});
+      }
+    }, 50);
+  };
 
   return (
     <div className="w-full">
@@ -46,8 +56,8 @@ export default function VillaVideoPlayer({
         </p>
       </div>
 
-      {/* Video Container Frame - Native 9:16 Vertical Ratio (Zero Black Bars) */}
-      <div className="reveal-scale max-w-[340px] sm:max-w-[360px] md:max-w-[380px] mx-auto">
+      {/* Video Container Frame - Native HTML5 Player */}
+      <div className="reveal-scale max-w-[320px] sm:max-w-[350px] md:max-w-[370px] mx-auto">
         <div
           className="relative w-full aspect-[9/16] rounded-xl overflow-hidden shadow-2xl border-2 bg-black"
           style={{ borderColor: 'rgba(201, 169, 110, 0.35)' }}
@@ -55,7 +65,7 @@ export default function VillaVideoPlayer({
           {!isPlaying ? (
             <div
               className="relative w-full h-full group cursor-pointer select-none"
-              onClick={() => setIsPlaying(true)}
+              onClick={handleStartPlay}
             >
               <img
                 src={VILLA_IMAGES.galleryHeader || VILLA_IMAGES.hero}
@@ -77,23 +87,15 @@ export default function VillaVideoPlayer({
               </div>
             </div>
           ) : (
-            <div className="relative w-full h-full overflow-hidden bg-black">
-              <iframe
-                src={videoEmbedUrl}
-                title="The Villa Clover - Video Tour"
-                className="w-full h-[calc(100%+60px)] -mt-[60px] border-0"
-                allow="autoplay; encrypted-media; fullscreen"
-                allowFullScreen
-              />
-              {/* Block any top-right pop-out click */}
-              <div
-                className="absolute top-0 right-0 w-32 h-16 z-20 pointer-events-auto"
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                }}
-              />
-            </div>
+            <video
+              ref={videoRef}
+              src={videoSrc}
+              controls
+              autoPlay
+              playsInline
+              className="w-full h-full object-cover bg-black"
+              preload="auto"
+            />
           )}
         </div>
       </div>
